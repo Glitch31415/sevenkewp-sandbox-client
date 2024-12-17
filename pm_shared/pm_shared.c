@@ -287,7 +287,7 @@ void PM_PlayStepSound( int step, float fvol )
 	// FIXME mp_footsteps needs to be a movevar
 	if ( pmove->multiplayer && !pmove->movevars->footsteps )
 		return;
-	V_PunchAxis( 0, (pmove->velocity.Length()/250) );
+	pmove->punchangle = Vector((pmove->velocity.Length()/250), 0, 0);
 	VectorCopy( pmove->velocity, hvel );
 	hvel[2] = 0.0;
 
