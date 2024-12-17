@@ -283,12 +283,12 @@ void PM_PlayStepSound( int step, float fvol )
 	}
 	
 	irand = pmove->RandomLong(0,1) + ( pmove->iStepLeft * 2 );
-	VectorCopy( pmove->velocity, hvel );
-	pmove->punchangle[0] = (Length(hvel)/250);
+
 	// FIXME mp_footsteps needs to be a movevar
 	if ( pmove->multiplayer && !pmove->movevars->footsteps )
 		return;
 
+	VectorCopy( pmove->velocity, hvel );
 	hvel[2] = 0.0;
 
 	if ( pmove->multiplayer && ( !g_onladder && Length( hvel ) <= 220 ) )
@@ -2725,7 +2725,7 @@ void PM_CheckFalling( void )
 			PM_PlayStepSound( PM_MapTextureTypeStepType( pmove->chtexturetype ), fvol );
 
 			// Knock the screen around a little bit, temporary effect
-			pmove->punchangle[ 0 ] = pmove->flFallVelocity * 0.013;	// punch z axis
+			pmove->punchangle[ 2 ] = pmove->flFallVelocity * 0.013;	// punch z axis
 
 			if ( pmove->punchangle[ 0 ] > 8 )
 			{
