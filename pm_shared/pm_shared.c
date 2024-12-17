@@ -288,7 +288,7 @@ void PM_PlayStepSound( int step, float fvol )
 	if ( pmove->multiplayer && !pmove->movevars->footsteps )
 		return;
 	VectorCopy( pmove->velocity, hvel );
-	pmove->punchangle[0] = (hvel.Length()/250);
+	pmove->punchangle[0] = (hvel->Length()/250);
 	hvel[2] = 0.0;
 
 	if ( pmove->multiplayer && ( !g_onladder && Length( hvel ) <= 220 ) )
