@@ -290,7 +290,6 @@ void PM_PlayStepSound( int step, float fvol )
 	VectorCopy( pmove->velocity, hvel );
 	pmove->punchangle[0] = (Length(hvel)/250);
 	pmove->Con_DPrintf("test");
-	pmove->Con_DPrintf(UTIL_VarArgs("%f", pmove->punchangle[0]));
 	hvel[2] = 0.0;
 
 	if ( pmove->multiplayer && ( !g_onladder && Length( hvel ) <= 220 ) )
