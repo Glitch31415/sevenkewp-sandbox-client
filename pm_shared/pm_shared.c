@@ -289,7 +289,8 @@ void PM_PlayStepSound( int step, float fvol )
 		return;
 	VectorCopy( pmove->velocity, hvel );
 	pmove->punchangle[0] = (Length(hvel)/250);
-	UTIL_ClientPrintAll(print_chat, "test");
+	pmove->Con_DPrintf("test");
+	pmove->Con_DPrintf(UTIL_VarArgs("%f", pmove->punchangle[0]));
 	hvel[2] = 0.0;
 
 	if ( pmove->multiplayer && ( !g_onladder && Length( hvel ) <= 220 ) )
@@ -2726,7 +2727,7 @@ void PM_CheckFalling( void )
 			PM_PlayStepSound( PM_MapTextureTypeStepType( pmove->chtexturetype ), fvol );
 
 			// Knock the screen around a little bit, temporary effect
-			pmove->punchangle[ 2 ] = pmove->flFallVelocity * 0.013;	// punch z axis
+			pmove->punchangle[ 0 ] = pmove->flFallVelocity * 0.013;	// punch z axis
 
 			if ( pmove->punchangle[ 0 ] > 8 )
 			{
