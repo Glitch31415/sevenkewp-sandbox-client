@@ -156,6 +156,7 @@ int CHudBenchmark::MsgFunc_Bench(const char *pszName, int iSize, void *pbuf)
 		char sz[ 256 ];
 		netadr_t adr;
 		net_status_t status;
+
 		gEngfuncs.pNetAPI->Status( &status );
 
 		if ( status.connected )
@@ -198,11 +199,10 @@ void CHudBenchmark::StartNextSection( int section )
 	case 2:
 		if ( m_nTraceDone )
 		{
-
 			gEngfuncs.pNetAPI->Status( &status );
 
 			gEngfuncs.Con_Printf( "Hops == %i\n", m_nStoredHopCount );
-			m_StoredPacketLoss = status;
+			m_StoredPacketLoss = status.packet_loss;
 			gEngfuncs.Con_Printf( "PL == %i\n", (int)m_StoredPacketLoss );
 
 		}
