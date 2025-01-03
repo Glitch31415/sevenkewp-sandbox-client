@@ -47,7 +47,7 @@ void CHud::Think(void)
 
 	net_status_t netstatus{};
 	gEngfuncs.pNetAPI->Status(&netstatus);
-	if (&netstatus.packet_loss > 0) {
+	if ((int)&netstatus.packet_loss != 0) {
 		gEngfuncs.Con_Printf("%i", (int)&netstatus.packet_loss);
 		PlaySound("buttons/blip3.wav", 1);
 	}
