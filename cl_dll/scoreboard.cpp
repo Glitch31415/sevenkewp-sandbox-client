@@ -105,7 +105,7 @@ int SCOREBOARD_WIDTH = 320;
 
 int CHudScoreboard :: Draw( float fTime )
 {
-	int can_show_packetloss = 0;
+	int can_show_packetloss = 1;
 	int FAR_RIGHT;
 
 	if ( !m_iShowscoresHeld && gHUD.m_Health.m_iHealth > 0 && !gHUD.m_iIntermission )
@@ -114,7 +114,7 @@ int CHudScoreboard :: Draw( float fTime )
 	GetAllPlayersInfo();
 
 	//  Packetloss removed on Kelly 'shipping nazi' Bailey's orders
-	if ( cl_showpacketloss && cl_showpacketloss->value && ( ScreenWidth >= 400 ) )
+	if ( ( ScreenWidth >= 400 ) )
 	{
 		can_show_packetloss = 1;
 		SCOREBOARD_WIDTH = 400;
@@ -311,11 +311,11 @@ int CHudScoreboard :: Draw( float fTime )
 // returns the ypos where it finishes drawing
 int CHudScoreboard :: DrawPlayers( int xpos_rel, float list_slot, int nameoffset, char *team )
 {
-	int can_show_packetloss = 0;
+	int can_show_packetloss = 1;
 	int FAR_RIGHT;
 
 	//  Packetloss removed on Kelly 'shipping nazi' Bailey's orders
-	if ( cl_showpacketloss && cl_showpacketloss->value && ( ScreenWidth >= 400 ) )
+	if ( ( ScreenWidth >= 400 ) )
 	{
 		can_show_packetloss = 1;
 		SCOREBOARD_WIDTH = 400;

@@ -44,6 +44,9 @@ void CHud::Think(void)
 	GetScreenInfo(&m_scrinfo);
 
 	m_Rainbow.Think();
+	if ((int)pl_info->packetloss != 0) {
+		PlaySound("buttons/blip3.wav", 1);
+	}
 
 	int newfov;
 	HUDLIST *pList = m_pHudList;
