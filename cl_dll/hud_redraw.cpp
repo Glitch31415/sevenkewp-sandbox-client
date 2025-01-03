@@ -44,7 +44,9 @@ void CHud::Think(void)
 	GetScreenInfo(&m_scrinfo);
 
 	m_Rainbow.Think();
-	if ((int)packetloss != 0) {
+	
+	net_status_t status;
+	if (gEngfuncs.pNetAPI->Status( &status ).packet_loss != 0) {
 		PlaySound("buttons/blip3.wav", 1);
 	}
 
