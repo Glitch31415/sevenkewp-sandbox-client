@@ -49,7 +49,7 @@ void CHud::Think(void)
 	gEngfuncs.pNetAPI->Status(&netstatus);
 	if (netstatus.packet_loss != 0) {
 		gEngfuncs.Con_Printf("%i", netstatus.packet_loss);
-		PlaySound("buttons/blip3.wav", 1);
+		PlaySound("fvox/buzz.wav", 1);
 	}
 
 	int newfov;
