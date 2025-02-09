@@ -198,7 +198,7 @@ int CHudHealth::Draw(float flTime)
 		a = MIN_ALPHA;
 
 	// If health is getting low, make it bright red
-	PlaySound("fvox/buzz.wav", (((100-m_iHealth)^2)/1000));
+	PlaySound("fvox/buzz.wav", (((100-m_iHealth)^2)/2500));
 	if (m_iHealth <= 15)
 		a = 255;
 		
