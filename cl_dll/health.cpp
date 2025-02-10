@@ -208,6 +208,9 @@ int CHudHealth::Draw(float flTime)
 		PlaySound("fvox/beep.wav", 1);
 		oldhealth = m_iHealth;
 	}
+	else {
+		oldhealth = m_iHealth;
+	}
 
 	if (m_iHealth <= 15)
 		a = 255;
