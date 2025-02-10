@@ -200,7 +200,7 @@ int CHudHealth::Draw(float flTime)
 
 	// If health is getting low, make it bright red
 	double cbit = gEngfuncs.GetClientTime();
-	gEngfuncs.Con_DPrintf( "%d\n", cbit );
+	gEngfuncs.Con_DPrintf( "%f\n", flTime );
 	if (m_iHealth != 0 && m_iHealth <= 50 && cbit >= beepintervaltimes)
 		PlaySound("fvox/beep.wav", (float)(pow((100-m_iHealth),2)/10000));
 		beepintervaltimes = (double)(cbit + (double)(m_iHealth/50));
