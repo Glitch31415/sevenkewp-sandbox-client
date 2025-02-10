@@ -201,7 +201,7 @@ int CHudHealth::Draw(float flTime)
 
 	// If health is getting low, make it bright red
 	if (m_iHealth != 0 && m_iHealth <= 50 && flTime >= beepintervaltimes) {
-		PlaySound("fvox/beep.wav", (float)(pow((100-m_iHealth),2)/10000));
+		PlaySound("fvox/fuzz.wav", (float)(pow((100-m_iHealth),2)/10000));
 		beepintervaltimes = flTime + (float)((float)m_iHealth/(float)50);
 	}
 	if (m_iHealth < oldhealth) {
