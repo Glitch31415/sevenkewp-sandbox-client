@@ -35,7 +35,7 @@ DECLARE_MESSAGE(m_Health, Damage )
 #define DAMAGE_NAME "sprites/%d_dmg.spr"
 
 int giDmgHeight, giDmgWidth;
-double beepintervaltimes = gEngfuncs.GetClientTime();
+double beepintervaltimes = (double)0.0;
 
 int giDmgFlags[NUM_DMG_TYPES] = 
 {
