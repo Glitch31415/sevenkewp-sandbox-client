@@ -36,6 +36,7 @@ DECLARE_MESSAGE(m_Health, Damage )
 
 int giDmgHeight, giDmgWidth;
 float beepintervaltimes = (float)0.0;
+float oldhealth = 100.0;
 
 int giDmgFlags[NUM_DMG_TYPES] = 
 {
@@ -202,6 +203,10 @@ int CHudHealth::Draw(float flTime)
 	if (m_iHealth != 0 && m_iHealth <= 50 && flTime >= beepintervaltimes) {
 		PlaySound("fvox/beep.wav", (float)(pow((100-m_iHealth),2)/10000));
 		beepintervaltimes = flTime + (float)((float)m_iHealth/(float)50);
+	}
+	if (m_iHealth < oldhealth) {
+		PlaySound("fvox/beep.wav", 1);
+		oldhealth = m_iHealth;
 	}
 
 	if (m_iHealth <= 15)
