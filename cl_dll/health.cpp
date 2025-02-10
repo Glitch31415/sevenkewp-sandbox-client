@@ -35,7 +35,7 @@ DECLARE_MESSAGE(m_Health, Damage )
 #define DAMAGE_NAME "sprites/%d_dmg.spr"
 
 int giDmgHeight, giDmgWidth;
-double beepintervaltimes = gEngfuncs.GetAbsoluteTime();
+double beepintervaltimes = 0.0;
 
 int giDmgFlags[NUM_DMG_TYPES] = 
 {
@@ -201,7 +201,7 @@ int CHudHealth::Draw(float flTime)
 	// If health is getting low, make it bright red
 	if (m_iHealth != 0 && m_iHealth <= 50 && gEngfuncs.GetAbsoluteTime() >= beepintervaltimes)
 		PlaySound("fvox/beep.wav", (float)(pow((100-m_iHealth),2)/10000));
-		beepintervaltimes = (double)(gEngfuncs.GetAbsoluteTime() + (m_iHealth*20));
+		beepintervaltimes = (double)(gEngfuncs.GetAbsoluteTime() + (double)(m_iHealth*20));
 
 	if (m_iHealth <= 15)
 		a = 255;
