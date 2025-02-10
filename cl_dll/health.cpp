@@ -199,9 +199,11 @@ int CHudHealth::Draw(float flTime)
 		a = MIN_ALPHA;
 
 	// If health is getting low, make it bright red
+	gEngfuncs.Con_DPrintf( "%f ", flTime );
 	if (m_iHealth != 0 && m_iHealth <= 50 && flTime >= beepintervaltimes)
 		PlaySound("fvox/beep.wav", (float)(pow((100-m_iHealth),2)/10000));
 		beepintervaltimes = flTime + (m_iHealth/50);
+		gEngfuncs.Con_DPrintf( "%f\n", beepintervaltimes );
 
 	if (m_iHealth <= 15)
 		a = 255;
