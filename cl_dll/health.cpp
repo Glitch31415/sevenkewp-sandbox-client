@@ -212,8 +212,12 @@ int CHudHealth::Draw(float flTime)
 		oldhealth = m_iHealth;
 	}
 
-	if (m_iHealth <= 15)
-		a = 255;
+	if (m_iHealth >= 100) {
+		a = 0;
+	}
+	else {
+		a = 255-((float)m_iHealth*2.55);
+	}
 		
 	GetPainColor( r, g, b );
 	ScaleColors(r, g, b, a );
