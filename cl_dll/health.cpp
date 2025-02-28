@@ -212,14 +212,13 @@ int CHudHealth::Draw(float flTime)
 		oldhealth = m_iHealth;
 	}
 
-	if (m_iHealth >= 100) {
-		a = 0;
-	}
-	else {
-		a = 255-((float)m_iHealth*2.55);
-	}
+	//if (m_iHealth <= 15)
+		a = 255;
 		
-	GetPainColor( r, g, b );
+	//GetPainColor( r, g, b );
+	b = 0;
+	g = (float)m_iHealth*2.55;
+	r = 255-((float)m_iHealth*2.55);
 	ScaleColors(r, g, b, a );
 
 	// Only draw health if we have the suit.
