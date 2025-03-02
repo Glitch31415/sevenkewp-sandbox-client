@@ -928,6 +928,8 @@ int CHudAmmo::Draw(float flTime)
 			x += iBarWidth + AmmoWidth/2;;
 
 			// GL Seems to need this
+			y = (ScreenHeight/2) + 215 + gHUD.m_iFontHeight + gHUD.m_iFontHeight / 2;
+			x = ScreenWidth/2 - 213;
 			ScaleColors(r, g, b, a );
 			x = gHUD.DrawHudNumber(x, y, iFlags | DHN_3DIGITS, gWR.CountAmmo(pw->iAmmoType), r, g, b);		
 
@@ -936,6 +938,8 @@ int CHudAmmo::Draw(float flTime)
 		else
 		{
 			// SPR_Draw a bullets only line
+			y = (ScreenHeight/2) + 215 + gHUD.m_iFontHeight + gHUD.m_iFontHeight / 2;
+			x = ScreenWidth/2 - 213;
 			x = ScreenWidth - 4 * AmmoWidth - iIconWidth;
 			x = gHUD.DrawHudNumber(x, y, iFlags | DHN_3DIGITS, gWR.CountAmmo(pw->iAmmoType), r, g, b);
 		}
