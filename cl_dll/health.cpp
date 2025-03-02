@@ -230,8 +230,8 @@ int CHudHealth::Draw(float flTime)
 		//y = ScreenHeight - gHUD.m_iFontHeight - gHUD.m_iFontHeight / 2;
 		//x = CrossWidth /2;
 
-		y = (ScreenHeight/2) + gHUD.m_iFontHeight + gHUD.m_iFontHeight / 2;
-		x = ScreenWidth/2 - 250;
+		y = (ScreenHeight/2) + 75 + gHUD.m_iFontHeight + gHUD.m_iFontHeight / 2;
+		x = ScreenWidth/2 - 220;
 		//SPR_Set(gHUD.GetSprite(m_HUD_cross), r, g, b);
 		//SPR_DrawAdditive(0, x, y, &gHUD.GetSpriteRect(m_HUD_cross));
 
