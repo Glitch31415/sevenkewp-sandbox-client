@@ -956,7 +956,7 @@ int CHudAmmo::Draw(float flTime)
 		{
 			y -= gHUD.m_iFontHeight + gHUD.m_iFontHeight/4;
 			x = ScreenWidth - 4 * AmmoWidth - iIconWidth;
-			y = (ScreenHeight/2) + 174 + gHUD.m_iFontHeight + gHUD.m_iFontHeight / 2;
+			y = (ScreenHeight/2) + 130 + gHUD.m_iFontHeight + gHUD.m_iFontHeight / 2;
 			x = ScreenWidth/2 - 213;
 			x = gHUD.DrawHudNumber(x, y, iFlags|DHN_3DIGITS, gWR.CountAmmo(pw->iAmmo2Type), r, g, b);
 
