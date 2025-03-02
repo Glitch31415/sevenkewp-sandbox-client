@@ -906,7 +906,7 @@ int CHudAmmo::Draw(float flTime)
 			// room for the number and the '|' and the current ammo
 			
 			//x = ScreenWidth - (8 * AmmoWidth) - iIconWidth;
-			y = (ScreenHeight/2) + 22 + gHUD.m_iFontHeight + gHUD.m_iFontHeight / 2;
+			y = (ScreenHeight/2) + 10 + gHUD.m_iFontHeight + gHUD.m_iFontHeight / 2;
 			x = ScreenWidth/2 - 213;
 			x = gHUD.DrawHudNumber(x, y, iFlags | DHN_3DIGITS, pw->iClip, r, g, b);
 
@@ -943,7 +943,7 @@ int CHudAmmo::Draw(float flTime)
 		// Draw the ammo Icon
 		int iOffset = (m_pWeapon->rcAmmo.bottom - m_pWeapon->rcAmmo.top)/8;
 		SPR_Set(m_pWeapon->hAmmo, r, g, b);
-		SPR_DrawAdditive(0, x, y - iOffset, &m_pWeapon->rcAmmo);
+		//SPR_DrawAdditive(0, x, y - iOffset, &m_pWeapon->rcAmmo);
 	}
 
 	// Does weapon have seconday ammo?
@@ -961,7 +961,7 @@ int CHudAmmo::Draw(float flTime)
 			// Draw the ammo Icon
 			SPR_Set(m_pWeapon->hAmmo2, r, g, b);
 			int iOffset = (m_pWeapon->rcAmmo2.bottom - m_pWeapon->rcAmmo2.top)/8;
-			SPR_DrawAdditive(0, x, y - iOffset, &m_pWeapon->rcAmmo2);
+			//SPR_DrawAdditive(0, x, y - iOffset, &m_pWeapon->rcAmmo2);
 		}
 	}
 	return 1;
