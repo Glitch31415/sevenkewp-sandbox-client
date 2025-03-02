@@ -905,9 +905,7 @@ int CHudAmmo::Draw(float flTime)
 		{
 			// room for the number and the '|' and the current ammo
 			
-			//x = ScreenWidth - (8 * AmmoWidth) - iIconWidth;
-			y = (ScreenHeight/2) + 37 + gHUD.m_iFontHeight + gHUD.m_iFontHeight / 2;
-			x = ScreenWidth/2 - 213;
+			x = ScreenWidth - (8 * AmmoWidth) - iIconWidth;
 			x = gHUD.DrawHudNumber(x, y, iFlags | DHN_3DIGITS, pw->iClip, r, g, b);
 
 			wrect_t rc;
@@ -928,8 +926,6 @@ int CHudAmmo::Draw(float flTime)
 			x += iBarWidth + AmmoWidth/2;;
 
 			// GL Seems to need this
-			y = (ScreenHeight/2) + 215 + gHUD.m_iFontHeight + gHUD.m_iFontHeight / 2;
-			x = ScreenWidth/2 - 213;
 			ScaleColors(r, g, b, a );
 			x = gHUD.DrawHudNumber(x, y, iFlags | DHN_3DIGITS, gWR.CountAmmo(pw->iAmmoType), r, g, b);		
 
@@ -938,8 +934,6 @@ int CHudAmmo::Draw(float flTime)
 		else
 		{
 			// SPR_Draw a bullets only line
-			y = (ScreenHeight/2) + 215 + gHUD.m_iFontHeight + gHUD.m_iFontHeight / 2;
-			x = ScreenWidth/2 - 213;
 			x = ScreenWidth - 4 * AmmoWidth - iIconWidth;
 			x = gHUD.DrawHudNumber(x, y, iFlags | DHN_3DIGITS, gWR.CountAmmo(pw->iAmmoType), r, g, b);
 		}
@@ -960,8 +954,6 @@ int CHudAmmo::Draw(float flTime)
 		{
 			y -= gHUD.m_iFontHeight + gHUD.m_iFontHeight/4;
 			x = ScreenWidth - 4 * AmmoWidth - iIconWidth;
-			y = (ScreenHeight/2) + 126 + gHUD.m_iFontHeight + gHUD.m_iFontHeight / 2;
-			x = ScreenWidth/2 - 213;
 			x = gHUD.DrawHudNumber(x, y, iFlags|DHN_3DIGITS, gWR.CountAmmo(pw->iAmmo2Type), r, g, b);
 
 			// Draw the ammo Icon
