@@ -97,8 +97,6 @@ int CHudAmmoSecondary :: Draw(float flTime)
 
 		// draw the number, right-aligned
 		x -= (gHUD.GetNumWidth( m_iAmmoAmounts[i], DHN_DRAWZERO ) * AmmoWidth);
-		y = (ScreenHeight/2) + 126 + gHUD.m_iFontHeight + gHUD.m_iFontHeight / 2;
-		x = ScreenWidth/2 - 213;
 		gHUD.DrawHudNumber( x, y, DHN_DRAWZERO, m_iAmmoAmounts[i], r, g, b );
 
 		if ( i != 0 )
