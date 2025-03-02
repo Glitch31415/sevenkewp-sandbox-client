@@ -907,7 +907,7 @@ int CHudAmmo::Draw(float flTime)
 			
 			//x = ScreenWidth - (8 * AmmoWidth) - iIconWidth;
 			y = (ScreenHeight/2) + 50 + gHUD.m_iFontHeight + gHUD.m_iFontHeight / 2;
-			x = ScreenWidth/2 + 213;
+			x = ScreenWidth/2;
 			x = gHUD.DrawHudNumber(x, y, iFlags | DHN_3DIGITS, pw->iClip, r, g, b);
 
 			wrect_t rc;
