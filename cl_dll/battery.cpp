@@ -153,7 +153,7 @@ int CHudBattery::Draw(float flTime)
 
 	//x += (m_prc1->right - m_prc1->left);
 
-	y = (ScreenHeight/2) - gHUD.m_iFontHeight + gHUD.m_iFontHeight / 2;
+	y = (ScreenHeight/2) - 100 + gHUD.m_iFontHeight + gHUD.m_iFontHeight / 2;
 	x = ScreenWidth/2 - 213;
 	x = gHUD.DrawHudNumber(x, y, DHN_3DIGITS | DHN_DRAWZERO, m_iBat, r, g, b);
 
