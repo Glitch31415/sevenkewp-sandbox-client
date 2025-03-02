@@ -929,8 +929,6 @@ int CHudAmmo::Draw(float flTime)
 
 			// GL Seems to need this
 			ScaleColors(r, g, b, a );
-			y = (ScreenHeight/2) + 126 + gHUD.m_iFontHeight + gHUD.m_iFontHeight / 2;
-			x = ScreenWidth/2 - 213;
 			x = gHUD.DrawHudNumber(x, y, iFlags | DHN_3DIGITS, gWR.CountAmmo(pw->iAmmoType), r, g, b);		
 
 
