@@ -906,7 +906,7 @@ int CHudAmmo::Draw(float flTime)
 			// room for the number and the '|' and the current ammo
 			
 			//x = ScreenWidth - (8 * AmmoWidth) - iIconWidth;
-			y = (ScreenHeight/2) + 10 + gHUD.m_iFontHeight + gHUD.m_iFontHeight / 2;
+			y = (ScreenHeight/2) + 32 + gHUD.m_iFontHeight + gHUD.m_iFontHeight / 2;
 			x = ScreenWidth/2 - 213;
 			x = gHUD.DrawHudNumber(x, y, iFlags | DHN_3DIGITS, pw->iClip, r, g, b);
 
