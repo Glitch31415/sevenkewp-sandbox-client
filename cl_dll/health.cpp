@@ -202,7 +202,6 @@ int CHudHealth::Draw(float flTime)
 	// If health is getting low, make it bright red
 	if (m_iHealth != 0 && m_iHealth <= 50 && flTime >= beepintervaltimes) {
 		gEngfuncs.pfnPlaySoundByName("fvox/fuzz.wav", (float)(pow((100-m_iHealth),2)/10000));
-		m_iHealth = m_iHealth + 1;
 		beepintervaltimes = flTime + (float)((float)m_iHealth/(float)50);
 	}
 	if (m_iHealth < oldhealth) {
