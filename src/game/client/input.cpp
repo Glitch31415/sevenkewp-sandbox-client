@@ -71,6 +71,7 @@ cvar_t *cl_vsmoothing;
 cvar_t *cl_jumptype;
 
 ConVar cl_fuckyouwoot("cl_fuckyouwoot", "0", FCVAR_BHL_ARCHIVE, "Jump automatically when ground is hit");
+ConVar cl_autojump("cl_autojump", "0", FCVAR_BHL_ARCHIVE, "waah");
 ConVar cl_fuckyouwoot_priority("cl_fuckyouwoot_priority", "0", FCVAR_BHL_ARCHIVE, "Autojump takes priority over ducktap");
 
 /*
