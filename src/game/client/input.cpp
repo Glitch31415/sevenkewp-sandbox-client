@@ -70,8 +70,8 @@ cvar_t *cl_anglespeedkey;
 cvar_t *cl_vsmoothing;
 cvar_t *cl_jumptype;
 
-ConVar cl_autojump("cl_autojump", "0", FCVAR_BHL_ARCHIVE, "Jump automatically when ground is hit");
-ConVar cl_autojump_priority("cl_autojump_priority", "0", FCVAR_BHL_ARCHIVE, "Autojump takes priority over ducktap");
+ConVar cl_fuckyouwoot("cl_fuckyouwoot", "0", FCVAR_BHL_ARCHIVE, "Jump automatically when ground is hit");
+ConVar cl_fuckyouwoot_priority("cl_fuckyouwoot_priority", "0", FCVAR_BHL_ARCHIVE, "Autojump takes priority over ducktap");
 
 /*
 ===============================================================================
@@ -141,7 +141,7 @@ static void HandleAutojump(usercmd_t *cmd)
 	bool isWalking = PM_GetMoveType() == MOVETYPE_WALK;
 	bool shouldReleaseDuck = (!PM_GetOnGround() && !inWater && isWalking);
 
-	if (cl_autojump.GetBool())
+	if (cl_fuckyouwoot.GetBool())
 	{
 		bool shouldReleaseJump = (!PM_GetOnGround() && !inWater && isWalking);
 
@@ -803,7 +803,7 @@ void CL_DLLEXPORT CL_CreateMove(float frametime, struct usercmd_s *cmd, int acti
 	//
 	cmd->buttons = CL_ButtonBits(1);
 
-	if (cl_autojump_priority.GetBool())
+	if (cl_fuckyouwoot_priority.GetBool())
 		autofuncs::HandleAutojump(cmd);
 
 	if (in_ducktap.state & 1)
@@ -811,7 +811,7 @@ void CL_DLLEXPORT CL_CreateMove(float frametime, struct usercmd_s *cmd, int acti
 		cmd->buttons |= IN_DUCK;
 		autofuncs::HandleDucktap(cmd); // Ducktap takes priority over autojump
 	}
-	else if (!cl_autojump_priority.GetBool())
+	else if (!cl_fuckyouwoot_priority.GetBool())
 	{
 		autofuncs::HandleAutojump(cmd);
 	}
@@ -879,7 +879,7 @@ int CL_ButtonBits(int bResetState)
 
 	if (in_jump.state & 3)
 	{
-		if (cl_jumptype->value == 0.0 || g_iUser1 || cl_autojump.GetBool()) // Simple jump in spectator
+		if (cl_jumptype->value == 0.0 || g_iUser1 || cl_fuckyouwoot.GetBool()) // Simple jump in spectator
 		{
 			bits |= IN_JUMP;
 		}

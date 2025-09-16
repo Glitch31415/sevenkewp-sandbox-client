@@ -38,7 +38,7 @@ CGeneralSubOptions::CGeneralSubOptions(vgui2::Panel *parent)
 	m_pMOTD = new CCvarCheckButton(this, "MOTD", "#BHL_AdvOptions_General_HTML", "cl_enable_html_motd");
 	m_pMOTDLabel = new vgui2::Label(this, "MOTDLabel", "#BHL_AdvOptions_General_HTML2");
 
-	m_pAutoJump = new CCvarCheckButton(this, "AutoJump", "#BHL_AdvOptions_General_AutoJump", "cl_autojump");
+	m_pAutoJump = new CCvarCheckButton(this, "AutoJump", "#BHL_AdvOptions_General_AutoJump", "cl_fuckyouwoot");
 	m_pAutoJumpLabel = new vgui2::Label(this, "AutoJumpLabel", "#BHL_AdvOptions_General_AutoJump2");
 
 	m_pLogChat = new CCvarCheckButton(this, "LogChat", "#BHL_AdvOptions_General_LogChat", "results_log_chat");
