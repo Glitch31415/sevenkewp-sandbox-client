@@ -48,92 +48,6 @@ WeaponsResource gWR;
 
 int g_weaponselect = 0;
 
-void CHudAmmo::DrawDynamicCrosshair() {
-	if (!m_pWeapon || m_hud_crosshair_mode->value != 1)
-		return;
-
-	WEAPON* pw = m_pWeapon; // shorthand
-
-	if (pw->hZoomedCrosshair && IsWeaponZoomed() && (pw->iFlagsEx & WEP_FLAG_USE_ZOOM_CROSSHAIR))
-		return;
-
-	if (g_crosshair_active) {
-		static wrect_t nullrc;
-		SetCrosshair(0, nullrc, 0, 0, 0);
-	}
-	
-	float accuracyX = pw->accuracyX;
-	float accuracyY = pw->accuracyY;
-	float accuracyX2 = pw->accuracyX2;
-	float accuracyY2 = pw->accuracyY2;
-	bool dynamicAccuracy = pw->iFlagsEx & WEP_FLAG_DYNAMIC_ACCURACY;
-
-	GetCurrentCustomWeaponAccuracy(pw->iId, accuracyX, accuracyY, accuracyX2, accuracyY2, dynamicAccuracy);
-
-	float now = gEngfuncs.GetClientTime();
-	if (g_last_attack_mode == 2 && (now - g_last_attack_time) < 2.0f) {
-		accuracyX = accuracyX2;
-		accuracyY = accuracyY2;
-	}
-
-	// lerp between accuracy changes
-	{
-		static int lastWeaponId;
-		static float lastAccuracyX;
-		static float lastAccuracyY;
-		static float nextAccuracyX;
-		static float nextAccuracyY;
-		static float lerpStart;
-
-		if (lastWeaponId != pw->iId) {
-			lastWeaponId = pw->iId;
-			lastAccuracyX = accuracyX;
-			lastAccuracyY = accuracyY;
-			nextAccuracyX = accuracyX;
-			nextAccuracyY = accuracyY;
-			lerpStart = now;
-		}
-
-		if (accuracyX != nextAccuracyX || accuracyY != nextAccuracyY) {
-			lastAccuracyX = nextAccuracyX;
-			lastAccuracyY = nextAccuracyY;
-			nextAccuracyX = accuracyX;
-			nextAccuracyY = accuracyY;
-			lerpStart = now;
-		}
-
-		float t = V_min(0.1f, (now - lerpStart)) / 0.1f;
-		accuracyX = lastAccuracyX + (nextAccuracyX - lastAccuracyX) * t;
-		accuracyY = lastAccuracyY + (nextAccuracyY - lastAccuracyY) * t;
-		accuracyX2 = accuracyX;
-		accuracyY2 = accuracyY;
-	}
-	
-
-	float punch = V_max(fabs(v_punchangle[0]), fabs(v_punchangle[1]));
-	if (punch > 0) {
-		punch = powf(punch, 0.5f);
-		accuracyX += punch;
-		accuracyY += punch;
-		accuracyX2 += punch;
-		accuracyY2 += punch;
-	}
-
-	int len = clamp(m_hud_crosshair_length->value, 1, 1000);
-	int width = clamp(m_hud_crosshair_width->value, 1, 1000);
-	int border = clamp(m_hud_crosshair_border->value, 0, 1000);
-
-	if (m_hud_crosshair_width->value == -1) {
-		// auto size
-		width = 2;
-		if (ScreenHeight <= 768) {
-			width = 1;
-		}
-	}
-
-	DrawCrossHair(accuracyX, accuracyY, len, width, border);
-}
-
 void WeaponsResource::LoadAllWeaponSprites(void)
 {
 	for (int i = 0; i < MAX_WEAPONS; i++)
@@ -1191,6 +1105,171 @@ void DrawAmmoBar(WEAPON *p, int x, int y, int width, int height)
 			DrawBar(x, y, width, height, f);
 		}
 	}
+}
+
+int CrosshairGapPixels(float accuracyDeg, bool isVertical) {
+	int screenW = ScreenWidth;
+	int screenH = ScreenHeight;
+
+	float aspect = (float)screenW / (float)screenH;
+	float baseAspect = 4.0f / 3.0f; // GoldSrc aspect used in FOV calculation
+
+	// convert GoldSrc fov to real FOV
+	float fovXRad43 = gHUD.m_iFOV * (M_PI / 180.0f);
+	float fovXRad = 2.0f * atan(tan(fovXRad43 * 0.5f) * (aspect / baseAspect));
+	float fovYRad = 2.0f * atan(tan(fovXRad * 0.5f) / aspect);
+
+	// accuracy angle in radians
+	float accRad = accuracyDeg * 0.5f * (M_PI / 180.0f);
+	float spread = tan(accRad); // for VECTOR_CONE_* math
+
+	if (isVertical) {
+		return (screenW * 0.5f) * (tan(accRad) / tan(fovXRad * 0.5f));
+	}
+	else {
+		return (screenH * 0.5f) * (tan(accRad) / tan(fovYRad * 0.5f));
+	}
+}
+
+void DrawCrossHair(float accuracyX, float accuracyY, int len, int thick, int border) {
+	int r, g, b, a;
+
+	int centerX = ScreenWidth / 2;
+	int centerY = ScreenHeight / 2;
+
+	int gapX = 10;
+	int gapY = 10;
+	int hthick = thick / 2;
+
+	int minGap = thick + border * 4;
+
+	gapX = V_max(CrosshairGapPixels(accuracyX, false), minGap);
+	gapY = V_max(CrosshairGapPixels(accuracyY, true), minGap);
+
+	if (gapX == minGap && gapY == minGap) {
+		//len *= 0.75f;
+	}
+	a = 200;
+	
+
+	if (border > 0) {
+		int blen = len + border * 2;
+		int bthick = thick + border * 2;
+		int bhthick = bthick / 2;
+		r = g = b = 0;
+
+		// horizontal
+		gEngfuncs.pfnFillRGBABlend(centerX - (gapX + blen - border), centerY - bhthick, blen, bthick, r, g, b, a);
+		gEngfuncs.pfnFillRGBABlend(centerX + gapX - border, centerY - bhthick, blen, bthick, r, g, b, a);
+
+		// vertical
+		gEngfuncs.pfnFillRGBABlend(centerX - bhthick, centerY - (gapY + blen - border), bthick, blen, r, g, b, a);
+		gEngfuncs.pfnFillRGBABlend(centerX - bhthick, centerY + gapY - border, bthick, blen, r, g, b, a);
+
+		// center dot
+		gEngfuncs.pfnFillRGBABlend(centerX - bhthick, centerY - bhthick, bthick, bthick, r, g, b, a);
+		gEngfuncs.pfnFillRGBABlend(centerX - bhthick, centerY - bhthick, bthick, bthick, r, g, b, a);
+	}
+
+	UnpackRGB(r, g, b, RGB_YELLOWISH);
+
+	// horizontal
+	gEngfuncs.pfnFillRGBABlend(centerX - (gapX + len), centerY - hthick, len, thick, r, g, b, a);
+	gEngfuncs.pfnFillRGBABlend(centerX + gapX, centerY - hthick, len, thick, r, g, b, a);
+
+	// vertical
+	gEngfuncs.pfnFillRGBABlend(centerX - hthick, centerY - (gapY + len), thick, len, r, g, b, a);
+	gEngfuncs.pfnFillRGBABlend(centerX - hthick, centerY + gapY, thick, len, r, g, b, a);
+
+	// center dot
+	gEngfuncs.pfnFillRGBABlend(centerX - hthick, centerY - hthick, thick, thick, r, g, b, a);
+	gEngfuncs.pfnFillRGBABlend(centerX - hthick, centerY - hthick, thick, thick, r, g, b, a);
+}
+
+void CHudAmmo::DrawDynamicCrosshair() {
+	if (!m_pWeapon || m_hud_crosshair_mode->value != 1)
+		return;
+
+	WEAPON* pw = m_pWeapon; // shorthand
+
+	if (pw->hZoomedCrosshair && IsWeaponZoomed() && (pw->iFlagsEx & WEP_FLAG_USE_ZOOM_CROSSHAIR))
+		return;
+
+	if (g_crosshair_active) {
+		static wrect_t nullrc;
+		SetCrosshair(0, nullrc, 0, 0, 0);
+	}
+	
+	float accuracyX = pw->accuracyX;
+	float accuracyY = pw->accuracyY;
+	float accuracyX2 = pw->accuracyX2;
+	float accuracyY2 = pw->accuracyY2;
+	bool dynamicAccuracy = pw->iFlagsEx & WEP_FLAG_DYNAMIC_ACCURACY;
+
+	GetCurrentCustomWeaponAccuracy(pw->iId, accuracyX, accuracyY, accuracyX2, accuracyY2, dynamicAccuracy);
+
+	float now = gEngfuncs.GetClientTime();
+	if (g_last_attack_mode == 2 && (now - g_last_attack_time) < 2.0f) {
+		accuracyX = accuracyX2;
+		accuracyY = accuracyY2;
+	}
+
+	// lerp between accuracy changes
+	{
+		static int lastWeaponId;
+		static float lastAccuracyX;
+		static float lastAccuracyY;
+		static float nextAccuracyX;
+		static float nextAccuracyY;
+		static float lerpStart;
+
+		if (lastWeaponId != pw->iId) {
+			lastWeaponId = pw->iId;
+			lastAccuracyX = accuracyX;
+			lastAccuracyY = accuracyY;
+			nextAccuracyX = accuracyX;
+			nextAccuracyY = accuracyY;
+			lerpStart = now;
+		}
+
+		if (accuracyX != nextAccuracyX || accuracyY != nextAccuracyY) {
+			lastAccuracyX = nextAccuracyX;
+			lastAccuracyY = nextAccuracyY;
+			nextAccuracyX = accuracyX;
+			nextAccuracyY = accuracyY;
+			lerpStart = now;
+		}
+
+		float t = V_min(0.1f, (now - lerpStart)) / 0.1f;
+		accuracyX = lastAccuracyX + (nextAccuracyX - lastAccuracyX) * t;
+		accuracyY = lastAccuracyY + (nextAccuracyY - lastAccuracyY) * t;
+		accuracyX2 = accuracyX;
+		accuracyY2 = accuracyY;
+	}
+	
+
+	float punch = V_max(fabs(v_punchangle[0]), fabs(v_punchangle[1]));
+	if (punch > 0) {
+		punch = powf(punch, 0.5f);
+		accuracyX += punch;
+		accuracyY += punch;
+		accuracyX2 += punch;
+		accuracyY2 += punch;
+	}
+
+	int len = clamp(m_hud_crosshair_length->value, 1, 1000);
+	int width = clamp(m_hud_crosshair_width->value, 1, 1000);
+	int border = clamp(m_hud_crosshair_border->value, 0, 1000);
+
+	if (m_hud_crosshair_width->value == -1) {
+		// auto size
+		width = 2;
+		if (ScreenHeight <= 768) {
+			width = 1;
+		}
+	}
+
+	DrawCrossHair(accuracyX, accuracyY, len, width, border);
 }
 
 //
