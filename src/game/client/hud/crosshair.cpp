@@ -52,8 +52,6 @@ void CHudCrosshair::Draw(float flTime)
 	// Draw custom crosshair if enabled
 	if (cl_cross_enable.GetBool() && !(CHudAmmo::Get()->m_fOnTarget && CHudAmmo::Get()->m_pWeapon->hAutoaim) && (!isZoomed || shouldDrawZoomed))
 	{
-		// test
-		gEngfuncs.pfnConsolePrint(CHudAmmo::Get()->m_pWeapon->szName);
 		CrosshairSettings settings;
 		settings.color = Color(cl_cross_red.GetInt(), cl_cross_green.GetInt(), cl_cross_blue.GetInt(), 255);
 		settings.gap = cl_cross_gap.GetInt();
@@ -62,16 +60,8 @@ void CHudCrosshair::Draw(float flTime)
 		settings.size = cl_cross_size.GetInt();
 		settings.dot = cl_cross_dot.GetBool();
 		settings.t = cl_cross_t.GetBool();
-		
-		if (strcmp(CHudAmmo::Get()->m_pWeapon->szName, "weapon_9mmhandgun") == 0) {
-			m_Img.SetPos(-ScreenWidth, 0);
-			m_Img.SetSize(ScreenWidth*2, ScreenHeight);
-			gEngfuncs.pfnConsolePrint("waah");
-		}
-		else {
-			m_Img.SetPos(0, 0);
-			m_Img.SetSize(ScreenWidth, ScreenHeight);
-		}
+		m_Img.SetPos(0, 0);
+		m_Img.SetSize(ScreenWidth, ScreenHeight);
 		m_Img.SetSettings(settings);
 		m_Img.Paint();
 	}
