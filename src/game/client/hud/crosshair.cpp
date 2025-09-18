@@ -52,6 +52,8 @@ void CHudCrosshair::Draw(float flTime)
 	// Draw custom crosshair if enabled
 	if (cl_cross_enable.GetBool() && !(CHudAmmo::Get()->m_fOnTarget && CHudAmmo::Get()->m_pWeapon->hAutoaim) && (!isZoomed || shouldDrawZoomed))
 	{
+		// test
+		gEngfuncs.pfnConsolePrint("------- BANNED PLAYERS -------\n");
 		CrosshairSettings settings;
 		settings.color = Color(cl_cross_red.GetInt(), cl_cross_green.GetInt(), cl_cross_blue.GetInt(), 255);
 		settings.gap = cl_cross_gap.GetInt();
