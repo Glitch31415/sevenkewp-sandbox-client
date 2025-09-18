@@ -63,7 +63,12 @@ void CHudCrosshair::Draw(float flTime)
 		settings.dot = cl_cross_dot.GetBool();
 		settings.t = cl_cross_t.GetBool();
 		m_Img.SetPos(0, 0);
-		m_Img.SetSize(ScreenWidth, ScreenHeight);
+		if (CHudAmmo::Get()->m_pWeapon->szName == "weapon_9mmhandgun") {
+			m_Img.SetSize(ScreenWidth*2, ScreenHeight);
+		}
+		else {
+			m_Img.SetSize(ScreenWidth, ScreenHeight);
+		}
 		m_Img.SetSettings(settings);
 		m_Img.Paint();
 	}
