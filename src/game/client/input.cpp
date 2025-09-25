@@ -511,8 +511,10 @@ void IN_MoverightUp(void)
 	KeyUp(&in_moveright);
 	CHudSpectator::Get()->HandleButtonsUp(IN_MOVERIGHT);
 }
-void IN_SpeedDown(void) { KeyDown(&in_speed); }
-void IN_SpeedUp(void) { KeyUp(&in_speed); }
+void IN_SpeedDown(void) { KeyDown(&in_speed); 
+ConPrintf("not running");}
+void IN_SpeedUp(void) { KeyUp(&in_speed);
+ConPrintf("running");}
 void IN_StrafeDown(void) { KeyDown(&in_strafe); }
 void IN_StrafeUp(void) { KeyUp(&in_strafe); }
 
@@ -541,29 +543,21 @@ void IN_JumpDown(void)
 {
 	KeyDown(&in_jump);
 	CHudSpectator::Get()->HandleButtonsDown(IN_JUMP);
+	ConPrintf("jumping");
 }
-void IN_JumpUp(void) { KeyUp(&in_jump); }
+void IN_JumpUp(void) { KeyUp(&in_jump); 
+ConPrintf("not jumping");
+}
 void IN_LongJumpDown(void) { KeyDown(&in_longjump); }
 void IN_LongJumpUp(void) { KeyUp(&in_longjump); }
 void IN_DuckDown(void)
 {
 	KeyDown(&in_duck);
-	// test
 	CHudSpectator::Get()->HandleButtonsDown(IN_DUCK);
-	int r, g, b;
-	char szText[128];
-	gHUD.GetHudColor(HudPart::Common, 0, r, g, b);
-	int x = ScreenWidth - (ScreenWidth / 4);
-	int y = 10;
-	sprintf(szText, "crouching");
-	gHUD.DrawHudString(x, y, 0, szText, r, g, b);
-	//gEngfuncs.pfnDrawString(500, 500, "crouching", 0, 255, 0);
 	ConPrintf("crouching");
 }
 void IN_DuckUp(void) {
-	// test
 	KeyUp(&in_duck);
-	gEngfuncs.pfnDrawString(500, 500, "not crouching", 255, 0, 0);
 	ConPrintf("not crouching");
 }
 void IN_ReloadDown(void) { KeyDown(&in_reload); }
