@@ -549,12 +549,12 @@ void IN_DuckDown(void)
 {
 	KeyDown(&in_duck);
 	// test
-	DrawHudString(0,0,2560,"crouching",0,255,0);
+	CHud::Get()->DrawHudString(0,0,2560,"crouching",0,255,0);
 	CHudSpectator::Get()->HandleButtonsDown(IN_DUCK);
 }
 void IN_DuckUp(void) { 
 	KeyUp(&in_duck); 
-	DrawHudString(0,0,2560,"not ducking",255,0,0);
+	CHud::Get()->DrawHudString(0,0,2560,"not ducking",255,0,0);
 }
 void IN_ReloadDown(void) { KeyDown(&in_reload); }
 void IN_ReloadUp(void) { KeyUp(&in_reload); }
