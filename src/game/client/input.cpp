@@ -72,6 +72,7 @@ cvar_t *cl_jumptype;
 
 ConVar cl_fuckyouwoot("cl_fuckyouwoot", "0", FCVAR_BHL_ARCHIVE, "Jump automatically when ground is hit");
 ConVar cl_autojump("cl_autojump", "0", FCVAR_BHL_ARCHIVE, "waah");
+ConVar cl_ctoggleprinttest("cl_ctoggleprinttest", "0", FCVAR_BHL_ARCHIVE, "meow");
 ConVar cl_fuckyouwoot_priority("cl_fuckyouwoot_priority", "0", FCVAR_BHL_ARCHIVE, "Autojump takes priority over ducktap");
 
 /*
@@ -363,9 +364,6 @@ void KeyDown(kbutton_t *b)
 	c = gEngfuncs.Cmd_Argv(1);
 	if (c[0]) {
 		k = atoi(c);
-		if (c[0] == 'c') {
-			ConsolePrint("crouching");
-		}
 	} else {
 		k = -1; // typed manually at the console for continuous down
 	}
@@ -400,9 +398,6 @@ void KeyUp(kbutton_t *b)
 	c = gEngfuncs.Cmd_Argv(1);
 	if (c[0]) {
 		k = atoi(c);
-		if (c[0] == 'c') {
-			ConsolePrint("not crouching");
-		}
 	}
 	else
 	{ // typed manually at the console, assume for unsticking, so clear all
@@ -556,8 +551,15 @@ void IN_DuckDown(void)
 {
 	KeyDown(&in_duck);
 	CHudSpectator::Get()->HandleButtonsDown(IN_DUCK);
+	if (cl_ctoggleprinttest.GetBool()) {
+		ConsolePrint("crouching\n");
+	}
 }
-void IN_DuckUp(void) { KeyUp(&in_duck); }
+void IN_DuckUp(void) { KeyUp(&in_duck); 
+if (cl_ctoggleprinttest.GetBool()) {
+		ConsolePrint("not crouching\n");
+}
+}
 void IN_ReloadDown(void) { KeyDown(&in_reload); }
 void IN_ReloadUp(void) { KeyUp(&in_reload); }
 void IN_Alt1Down(void) { KeyDown(&in_alt1); }
