@@ -361,11 +361,14 @@ void KeyDown(kbutton_t *b)
 	char *c;
 
 	c = gEngfuncs.Cmd_Argv(1);
-	if (c[0])
+	if (c[0]) {
 		k = atoi(c);
-	else
+		if (c[0] == 'c') {
+			ConsolePrint("crouching");
+		}
+	} else {
 		k = -1; // typed manually at the console for continuous down
-
+	}
 	if (k == b->down[0] || k == b->down[1])
 		return; // repeating key
 
@@ -395,8 +398,12 @@ void KeyUp(kbutton_t *b)
 	char *c;
 
 	c = gEngfuncs.Cmd_Argv(1);
-	if (c[0])
+	if (c[0]) {
 		k = atoi(c);
+		if (c[0] == 'c') {
+			ConsolePrint("not crouching");
+		}
+	}
 	else
 	{ // typed manually at the console, assume for unsticking, so clear all
 		b->down[0] = b->down[1] = 0;
