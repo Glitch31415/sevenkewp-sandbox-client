@@ -550,13 +550,13 @@ void IN_DuckDown(void)
 	KeyDown(&in_duck);
 	// test
 	CHudSpectator::Get()->HandleButtonsDown(IN_DUCK);
-	gHUD.DrawHudString(500,500,2560,"crouching",0,255,0);
+	gHUD.DrawHudStringColorCodesCentered(1280, gHUD.m_scrinfo.iCharHeight * 7, 2560, "crouching", 0, 255, 0);
 	gEngfuncs.Con_DPrintf("crouching");
 }
 void IN_DuckUp(void) {
 	// test
 	KeyUp(&in_duck); 
-	gHUD.DrawHudString(500,500,2560,"not crouching",255,0,0);
+	gHUD.DrawHudStringColorCodesCentered(1280, gHUD.m_scrinfo.iCharHeight * 7, 2560, "not crouching", 255, 0, 0);
 	gEngfuncs.Con_DPrintf("not crouching");
 }
 void IN_ReloadDown(void) { KeyDown(&in_reload); }
