@@ -555,6 +555,8 @@ void IN_DuckDown(void)
 	KeyDown(&in_duck);
 	CHudSpectator::Get()->HandleButtonsDown(IN_DUCK);
 	ConPrintf("crouching");
+	gEngfuncs.pfnCenterPrint("crouching");
+	CenterPrint("crouching");
 }
 void IN_DuckUp(void) {
 	KeyUp(&in_duck);
