@@ -1755,7 +1755,7 @@ Client side punch effect
 */
 void V_PunchAxis(int axis, float punch)
 {
-	ev_punchangle[axis] = punch;
+	//ev_punchangle[axis] = punch;
 }
 
 /*
