@@ -729,10 +729,11 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 	}
 
 	// Add in the punchangle, if any
-	VectorAdd(pparams->viewangles, pparams->punchangle, pparams->viewangles);
+	//VectorAdd(pparams->viewangles, pparams->punchangle, pparams->viewangles);
 
 	// Include client side punch, too
-	VectorAdd(pparams->viewangles, (float *)&ev_punchangle, pparams->viewangles);
+	//VectorAdd(pparams->viewangles, (float *)&ev_punchangle, pparams->viewangles);
+	// lmao disabled camera knockback
 
 	V_DropPunchAngle(pparams->frametime, (float *)&ev_punchangle);
 
@@ -1754,7 +1755,7 @@ Client side punch effect
 */
 void V_PunchAxis(int axis, float punch)
 {
-	//ev_punchangle[axis] = punch; disabled camera knockback lmao
+	ev_punchangle[axis] = punch; disabled camera knockback lmao
 }
 
 /*
